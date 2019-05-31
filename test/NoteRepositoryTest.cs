@@ -7,7 +7,7 @@ using Xunit;
 namespace test
 {
   [TestCaseOrderer("test.PriorityOrderer", "test")]
-  public class NoteRepositoryTest : IClassFixture<NoteDbSetup>//, IDisposable
+  public class NoteRepositoryTest : IClassFixture<NoteDbSetup>
   {
     NoteDbSetup _setup;//= new DbSetup();
     public NoteRepositoryTest(NoteDbSetup setup)
@@ -19,7 +19,7 @@ namespace test
     public void TestGetAllNotes()
     {
 
-      NoteRepository noteRepository = new NoteRepository(@"server=.\sqlexpress;database=keepnote_db;integrated security=true");
+      NoteRepository noteRepository = new NoteRepository(@"server=.\sqlexpress;database=master;integrated security=true");
 
 
       List<Note> noteList = noteRepository.GetAllNotes();
@@ -31,7 +31,7 @@ namespace test
     [Fact,TestPriority(1)]
     public void TestAddNote()
     {
-      NoteRepository noteRepository = new NoteRepository(@"server=.\sqlexpress;database=keepnote_db;integrated security=true");
+      NoteRepository noteRepository = new NoteRepository(@"server=.\sqlexpress;database=master;integrated security=true");
 
       Note newNote = new Note
       {
@@ -44,9 +44,6 @@ namespace test
       int records = noteRepository.AddNote(newNote);
       Assert.Equal(1, records);
     }
-    //public void Dispose()
-    //{
-    //  _setup.Dispose();
-    //}
+    
   }
 }

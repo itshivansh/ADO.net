@@ -20,7 +20,7 @@ namespace test
     public void TestGetAllUsers()
     {
 
-      UserRepository userRepository = new UserRepository(@"server=.\sqlexpress;database=keepnote_db;integrated security=true");
+      UserRepository userRepository = new UserRepository(@"server=.\sqlexpress;database=master;integrated security=true");
 
       List<User> userList = userRepository.GetAllUsers();
 
@@ -31,7 +31,7 @@ namespace test
     public void TestAddUserWithoutSave()
     {
 
-      UserRepository userRepository = new UserRepository(@"server=.\sqlexpress;database=keepnote_db;integrated security=true");
+      UserRepository userRepository = new UserRepository(@"server=.\sqlexpress;database=master;integrated security=true");
 
       User newUser = new User
       {
@@ -43,7 +43,7 @@ namespace test
 
       Assert.Equal(3, userRepository.AddUser(newUser));
 
-      userRepository = new UserRepository(@"server=.\sqlexpress;database=keepnote_db;integrated security=true");
+      userRepository = new UserRepository(@"server=.\sqlexpress;database=master;integrated security=true");
 
       List<User> userList = userRepository.GetAllUsers();
 
@@ -54,7 +54,7 @@ namespace test
     public void TestAddUserWithSave()
     {
 
-      UserRepository userRepository = new UserRepository(@"server=.\sqlexpress;database=keepnote_db;integrated security=true");
+      UserRepository userRepository = new UserRepository(@"server=.\sqlexpress;database=master;integrated security=true");
 
       User newUser = new User
       {
@@ -69,7 +69,7 @@ namespace test
 
       int count = userRepository.SaveChanges();
 
-      userRepository = new UserRepository(@"server=.\sqlexpress;database=keepnote_db;integrated security=true");
+      userRepository = new UserRepository(@"server=.\sqlexpress;database=master;integrated security=true");
 
       List<User> userList = userRepository.GetAllUsers();
 

@@ -12,7 +12,7 @@ namespace test
     SqlCommand cmd;
     public UserDbSetup()
     {
-      con = new SqlConnection(@"server=.\sqlexpress;database=keepnote_db;integrated security=true");
+      con = new SqlConnection(@"server=.\sqlexpress;database=master;integrated security=true");
       con.Open();
       cmd = new SqlCommand();
       cmd.Connection = con;
@@ -34,8 +34,7 @@ namespace test
       if (con.State == System.Data.ConnectionState.Closed)
         con.Open();
 
-      //cmd.CommandText = "drop table notes";
-      //cmd.ExecuteNonQuery();
+       
 
       cmd.CommandText = "drop table users";
       cmd.ExecuteNonQuery();
