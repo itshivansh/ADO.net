@@ -9,17 +9,21 @@ namespace test
   [TestCaseOrderer("test.PriorityOrderer", "test")]
   public class NoteRepositoryTest : IClassFixture<NoteDbSetup>
   {
-    NoteDbSetup _setup;//= new DbSetup();
+    private readonly string constr;
     public NoteRepositoryTest(NoteDbSetup setup)
     {
-      _setup = setup;
+      constr = Environment.GetEnvironmentVariable("MSSQL_URL");
+      if (constr == null)
+      {
+        constr = @"server=.\sqlexpress;database=keepnote_db;integrated security=true";
+      }
     }
 
     [Fact,TestPriority(0)]
     public void TestGetAllNotes()
     {
 
-      NoteRepository noteRepository = new NoteRepository(@"server=.\sqlexpress;database=master;integrated security=true");
+      NoteRepository noteRepository = new NoteRepository(constr);
 
 
       List<Note> noteList = noteRepository.GetAllNotes();
@@ -31,7 +35,7 @@ namespace test
     [Fact,TestPriority(1)]
     public void TestAddNote()
     {
-      NoteRepository noteRepository = new NoteRepository(@"server=.\sqlexpress;database=master;integrated security=true");
+      NoteRepository noteRepository = new NoteRepository(constr);
 
       Note newNote = new Note
       {

@@ -9,7 +9,12 @@ namespace test
     SqlCommand cmd;
     public NoteDbSetup()
     {
-      con = new SqlConnection(@"server=.\sqlexpress;database=master;integrated security=true");
+      string constr = Environment.GetEnvironmentVariable("MSSQL_URL");
+      if (constr == null)
+      {
+        constr = @"server=.\sqlexpress;database=keepnote_db;integrated security=true";
+      }
+      con = new SqlConnection(constr);
       con.Open();
       cmd = new SqlCommand();
       cmd.Connection = con;
