@@ -8,51 +8,47 @@ namespace KeepNote.DAL
 {
   public class NoteRepository
   {
-    SqlConnection connection;
-    SqlCommand command;
+    /*
+      Declare variables of type SqlConnection and SqlCommand
+    */
+
     public NoteRepository(string connectionString)
     {
-      connection = new SqlConnection(connectionString);
-      command = new SqlCommand();
+      /*
+        Instantiate SqlConnection object with the connectionString passed to the constructor
+        Instantiate SqlCommand object
+       */
+      
     }
 
+    //Read all notes 
     public List<Note> GetAllNotes()
     {
-      connection.Open();
-      command.CommandText = "select * from notes";
-      command.Connection = connection;
-
-      List<Note> noteList = new List<Note>();
-
-      SqlDataReader dataReader;
-      dataReader = command.ExecuteReader();
-
-      while (dataReader.Read())
-      {
-        Note note = new Note();
-
-        note.NoteId = Convert.ToInt32(dataReader["noteid"]);
-        note.Title = dataReader["title"].ToString();
-        note.Description = dataReader["description"].ToString();
-        note.CreatedBy = Convert.ToInt32(dataReader["createdby"]);
-
-        noteList.Add(note);
-
-      }
-      connection.Close();
-      return noteList;
+      /*
+        1. open connection
+        2. set the command text of SqlCommand object with appropriate query to read all notes
+        3. using ExecuteReader() method of SqlCommand object fetch data
+        4. Recursively read the records fetced one by one and populate the note object
+        5. Populate the list object with note object on each iteration
+        6. close the connection
+        7. Return the populated list
+      */
+    
+      return null;
     }
 
     public int AddNote(Note note)
     {
-      command.Connection = connection;
-      connection.Open();
-      command.CommandText = $"insert into notes(noteid,title,description,createdby) values" +
-        $"({note.NoteId},'{note.Title}','{note.Description}','{note.CreatedBy}') ";
 
-      int count = command.ExecuteNonQuery();
-      connection.Close();
-      return count;
+      /*
+        1. open connection
+        2. set the command text of SqlCommand object with appropriate query to insert note record
+        3. execute ExecuteNonQuery() method 
+        4. close the connection
+        5. return the count of records
+      */
+
+      
     }
   }
 }

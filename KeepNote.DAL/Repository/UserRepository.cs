@@ -9,55 +9,53 @@ namespace KeepNote.DAL
 {
   public class UserRepository
   {
-    SqlConnection connection = null;
-    SqlDataAdapter sda = null;
 
-    DataSet ds;
+    /*
+      Declare variables of type SqlConnection and SqlCommand
+    */
 
     public UserRepository(string connectionString)
     {
-      connection = new SqlConnection(connectionString);
-
-      sda = new SqlDataAdapter("select * from users", connection);
-      ds = new DataSet();
-      sda.Fill(ds, "Users");
+      /*
+        1. create SqlConnection instance with connectionString passed
+        2. create SqlDataAdapter instance for users table
+        3. create DataSet instance
+        4. populate DataSet with records fetched
+      
+       */
     }
 
     public List<User> GetAllUsers()
     {
-      List<User> employeeList = new List<User>();
-
-      foreach (DataRow dr in ds.Tables["Users"].Rows)
-      {
-        User user = new User();
-
-        user.UserId = Convert.ToInt32(dr["userid"]);
-        user.UserName = dr["username"].ToString();
-        user.Email = dr["email"].ToString();
-        user.Password = dr["password"].ToString();
-
-        employeeList.Add(user);
-      }
-      return employeeList;
+      /*
+        1. Traverse through the rows in table Users of DataSet
+        2. For each row, populate the user object
+        3. Populate list with user object
+        4. return the list
+       */
+ 
     }
 
     public int AddUser(User user)
     {
-      DataRow newRow = ds.Tables["Users"].NewRow();
-      newRow["userid"] = user.UserId;
-      newRow["username"] = user.UserName;
-      newRow["email"] = user.Email;
-      newRow["password"] = user.Password;
-         
-      ds.Tables["Users"].Rows.Add(newRow);
 
-      return ds.Tables["Users"].Rows.Count;
+      /*
+        1. create new DataRow
+        2. populate the new DataRow with user values
+        3. add this DataRow to the Rows of DataTable for Users 
+        4. return the count of records
+      */
+
+       
     }
 
     public int SaveChanges()
     {
-      SqlCommandBuilder commandBuilder = new SqlCommandBuilder(sda);
-      return sda.Update(ds, "Users");
+      /*
+        using SqlCommandBuilder update the Users table with User Records from DataSet
+
+       */
+      
     }
   }
 }
